@@ -56,14 +56,43 @@ def validate_data(values):
     return True
 
 
+"""
+Refactoring of these two functions by using an additional parameter for the
+function (worksheet). Then using f strings in the print statements as well
+as updating the method for retrieving the worksheets passing the worksheet
+into the .worksheet method and storing it in a universal variable.
+Finally the function is called twice with the "sales" taken as a parameter
+in the first call and "surplus" taken as a parameter in the secong call
+
 def update_sales_worksheet(data):
-    """
+
     Update sales worksheet, appends new row with the list data provided.
-    """
+
     print("Updating sales worksheet...")
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
+
+
+def update_surplus_worksheet(data):
+
+    Update surplus worksheet with a new row of calculated surplus data
+
+    print("Updating surplus worksheet....")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(data)
+    print("Surplus worksheet successfully updated.\n")
+"""
+
+
+def update_worksheet(data, worksheet):
+    """
+    Updates relevent worksheet with relevent integers provided
+    """
+    print(f"Updating {worksheet} worksheet....")
+    update_for_worksheet = SHEET.worksheet(worksheet)
+    update_for_worksheet.append_row(data)
+    print(f"{worksheet} worksheet successfully updated.\n")
 
 
 def calculate_surplus_data(sales_row):
@@ -85,25 +114,15 @@ def calculate_surplus_data(sales_row):
     return surplus_data
 
 
-def update_surplus_worksheet(data):
-    """
-    Update surplus worksheet with a new row of calculated surplus data
-    """
-    print("Updating surplus worksheet....")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(data)
-    print("Surplus worksheet successfully updated.\n")
-
-
 def main():
     """
     Run all program functions
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 
 print("Welcome to Love Sandwiches Data Automation")
